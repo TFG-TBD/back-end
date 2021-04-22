@@ -2,6 +2,7 @@ const { gql } = require('apollo-server');
 
 const userType = gql`
 	type User {
+		id: ID!
 		userInfo: UserInfo
 		follows: [User]!
 		followsCount: Int!
@@ -11,6 +12,11 @@ const userType = gql`
 		conversations: [Conversation]!
 		lists: [List]!
 		ratings: [Rating]!
+	}
+
+	type Token {
+		value: String!
+		expiresIn: String!
 	}
 `;
 

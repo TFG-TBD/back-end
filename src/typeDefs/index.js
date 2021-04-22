@@ -9,6 +9,7 @@ const {
 	messageType,
 	reactionType,
 	commentType,
+	serieType,
 } = require('./types');
 
 const typeDefs = [
@@ -22,6 +23,7 @@ const typeDefs = [
 	messageType,
 	reactionType,
 	commentType,
+	serieType,
 ];
 
 module.exports = {

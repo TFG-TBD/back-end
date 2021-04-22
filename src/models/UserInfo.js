@@ -30,14 +30,19 @@ const schema = new mongoose.Schema({
 		require: true,
 		default: false,
 	},
+	admin: {
+		type: Boolean,
+		require: false,
+		default: false,
+	},
 	birthDate: {
 		type: Date,
-		require: true,
+		require: false,
 	},
 	gender: {
 		type: String,
 		enum: ['male', 'female', 'other'],
-		require: true,
+		require: false,
 	},
 	city: {
 		type: String,

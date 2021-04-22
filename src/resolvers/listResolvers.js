@@ -1,23 +1,28 @@
 const { List } = require('../models');
-const { UserInputError } = require('apollo-server');
+const { UserInputError, AuthenticationError } = require('apollo-server');
 
 const listResolvers = {
 	Query: {
-		lists: (root, args) => {
-			// TODO Authorization
+		lists: (root, args, context) => {
+			if (!context.currentUser)
+				throw new AuthenticationError('Unauthorized', {
+					invalidArgs: args,
+				});
 
-			if (args.id) {
-				return List.find({ _id: args.id });
-			}
-			return List.find({});
+			if (args.id) return List.find({ _id: args.id, user: context.currentUser._id });
+
+			return List.find({ user: context.currentUser._id });
 		},
 	},
 
 	Mutation: {
-		addList: (root, args) => {
-			// TODO Authorization
+		addList: (root, args, context) => {
+			if (!context.currentUser)
+				throw new AuthenticationError('Unauthorized', {
+					invalidArgs: args,
+				});
 
-			const list = new List({ ...args });
+			const list = new List({ ...args, user: context.currentUser._id });
 			return list.save().catch((error) => {
 				throw new UserInputError(error.message, {
 					invalidArgs: args,
@@ -25,22 +30,39 @@ const listResolvers = {
 			});
 		},
 
-		deleteList: async (root, args) => {
-			// TODO Authorization
+		deleteList: async (root, args, context) => {
+			if (!context.currentUser)
+				throw new AuthenticationError('Unauthorized', {
+					invalidArgs: args,
+				});
 
-			await List.deleteOne({ _id: args.id });
+			const deleted = await List.deleteOne({ _id: args.id, user: context.currentUser._id });
+			if (!deleted.deletedCount) return null;
+
 			return args.id;
 		},
 
-		updateList: (root, args) => {
-			return List.findByIdAndUpdate({ _id: args.id }, { ...args }, { useFindAndModify: false, new: true });
+		updateList: (root, args, context) => {
+			if (!context.currentUser)
+				throw new AuthenticationError('Unauthorized', {
+					invalidArgs: args,
+				});
+
+			return List.findOneAndUpdate(
+				{ _id: args.id, user: context.currentUser._id },
+				{ ...args },
+				{ useFindAndModify: false, new: true }
+			);
 		},
 
-		addSeriesToList: (root, args) => {
-			// TODO Authorization
+		addSeriesToList: (root, args, context) => {
+			if (!context.currentUser)
+				throw new AuthenticationError('Unauthorized', {
+					invalidArgs: args,
+				});
 
-			return List.findByIdAndUpdate(
-				{ _id: args.id },
+			return List.findOneAndUpdate(
+				{ _id: args.id, user: context.currentUser._id },
 				{
 					$addToSet: {
 						series: { $each: args.serieIds },
@@ -50,11 +72,14 @@ const listResolvers = {
 			);
 		},
 
-		removeSeriesFromList: (root, args) => {
-			// TODO Authorization
+		removeSeriesFromList: (root, args, context) => {
+			if (!context.currentUser)
+				throw new AuthenticationError('Unauthorized', {
+					invalidArgs: args,
+				});
 
-			return List.findByIdAndUpdate(
-				{ _id: args.id },
+			return List.findOneAndUpdate(
+				{ _id: args.id, user: context.currentUser._id },
 				{
 					$pullAll: {
 						series: args.serieIds,
@@ -64,11 +89,14 @@ const listResolvers = {
 			);
 		},
 
-		addEpisodesToList: (root, args) => {
-			// TODO Authorization
+		addEpisodesToList: (root, args, context) => {
+			if (!context.currentUser)
+				throw new AuthenticationError('Unauthorized', {
+					invalidArgs: args,
+				});
 
-			return List.findByIdAndUpdate(
-				{ _id: args.id },
+			return List.findOneAndUpdate(
+				{ _id: args.id, user: context.currentUser._id },
 				{
 					$addToSet: {
 						episodes: { $each: args.episodeIds },
@@ -78,11 +106,14 @@ const listResolvers = {
 			);
 		},
 
-		removeEpisodesFromList: (root, args) => {
-			// TODO Authorization
+		removeEpisodesFromList: (root, args, context) => {
+			if (!context.currentUser)
+				throw new AuthenticationError('Unauthorized', {
+					invalidArgs: args,
+				});
 
-			return List.findByIdAndUpdate(
-				{ _id: args.id },
+			return List.findOneAndUpdate(
+				{ _id: args.id, user: context.currentUser._id },
 				{
 					$pullAll: {
 						episodes: args.episodeIds,

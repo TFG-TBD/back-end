@@ -7,6 +7,7 @@ const { conversationType } = require('./conversationType');
 const { messageType } = require('./messageType');
 const { reactionType } = require('./reactionType');
 const { commentType } = require('./commentType');
+const { serieType } = require('./serieType');
 
 module.exports = {
 	userInfoType,
@@ -18,4 +19,5 @@ module.exports = {
 	messageType,
 	reactionType,
 	commentType,
+	serieType,
 };
