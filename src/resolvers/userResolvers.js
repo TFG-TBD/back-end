@@ -1,82 +1,88 @@
-const { User, UserInfo } = require('../models');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = require('../utils/config');
-const { UserInputError, AuthenticationError } = require('apollo-server');
+const { User } = require('../models');
+const { AuthenticationError } = require('apollo-server');
 
 const userResolvers = {
-	Query: {
-		user: () => User.find({}),
-		me: (root, args, context) => {
+	Query: {},
+
+	Mutation: {
+		follow: async (root, args, context) => {
 			if (!context.currentUser)
 				throw new AuthenticationError('Unauthorized', {
 					invalidArgs: args,
 				});
 
-			return context.currentUser;
+			const followedUser = await User.findOneAndUpdate(
+				{ _id: args.id },
+				{
+					$addToSet: {
+						followers: context.currentUser.id,
+					},
+					$inc: {
+						followersCount: 1,
+					},
+				},
+				{ useFindAndModify: false, new: true }
+			);
+
+			if (!followedUser) return null;
+
+			const user = await User.findOneAndUpdate(
+				{ _id: context.currentUser.id },
+				{
+					$addToSet: {
+						follows: followedUser.id,
+					},
+					$inc: {
+						followsCount: 1,
+					},
+				},
+				{ useFindAndModify: false, new: true }
+			);
+
+			return user.id;
 		},
-	},
 
-	Mutation: {
-		login: async (root, args) => {
-			if (!args.username && !args.email)
-				throw new UserInputError('Invalid username or password', {
+		unfollow: async (root, args, context) => {
+			if (!context.currentUser)
+				throw new AuthenticationError('Unauthorized', {
 					invalidArgs: args,
 				});
 
-			const users = await User.aggregate([
-				{ $lookup: { from: 'userinfos', localField: 'userInfo', foreignField: '_id', as: 'userInfo' } },
-				{ $unwind: '$userInfo' },
-				{ $match: { $or: [{ 'userInfo.username': args.username }, { 'userInfo.email': args.email }] } },
-			]);
+			const followedUser = await User.findOneAndUpdate(
+				{ _id: args.id },
+				{
+					$pullAll: {
+						followers: [context.currentUser.id],
+					},
+					$inc: {
+						followersCount: -1,
+					},
+					$max: {
+						followersCount: 0,
+					},
+				},
+				{ useFindAndModify: false, new: true }
+			);
 
-			if (!users.length)
-				throw new UserInputError('Invalid username or password', {
-					invalidArgs: args,
-				});
+			if (!followedUser) return null;
 
-			const user = users[0];
-			const passwordCorrect = user === null ? false : await bcrypt.compare(args.password, user.userInfo.password);
+			const user = await User.findOneAndUpdate(
+				{ _id: context.currentUser.id },
+				{
+					$pullAll: {
+						follows: [followedUser.id],
+					},
+					$inc: {
+						followsCount: -1,
+					},
+					$max: {
+						followersCount: 0,
+					},
+				},
+				{ useFindAndModify: false, new: true }
+			);
 
-			if (!passwordCorrect)
-				throw new UserInputError('Invalid username or password', {
-					invalidArgs: args,
-				});
-
-			const userForToken = {
-				id: user._id,
-				username: user.userInfo.username,
-				email: user.userInfo.email,
-			};
-
-			return { value: jwt.sign(userForToken, JWT_SECRET, { expiresIn: '7d' }), expiresIn: '7d' };
-		},
-		register: async (root, args) => {
-			const userInfo = new UserInfo({ username: args.username, email: args.email });
-
-			const saltRounds = 10;
-			userInfo.password = await bcrypt.hash(args.password, saltRounds);
-			const userInfoSaved = await userInfo.save();
-
-			const user = new User({
-				userInfo: userInfoSaved.id,
-				follows: [],
-				followers: [],
-				platforms: [],
-				conversations: [],
-				lists: [],
-				ratings: [],
-			});
-
-			await user.save();
-
-			const userForToken = {
-				id: user._id,
-				username: userInfoSaved.username,
-				email: userInfoSaved.email,
-			};
-
-			return { value: jwt.sign(userForToken, JWT_SECRET, { expiresIn: '7d' }), expiresIn: '7d' };
+			return user.id;
 		},
 	},
 };

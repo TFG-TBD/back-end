@@ -17,6 +17,7 @@ const userType = gql`
 	type Token {
 		value: String!
 		expiresIn: String!
+		user: User
 	}
 `;
 

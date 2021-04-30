@@ -61,6 +61,45 @@ class TMDB {
 
 		return this.request(url, config);
 	}
+
+	/** Return network information by id */
+	getNetwork(id, options) {
+		let query = options ? `?${querystring.stringify(options)}` : '';
+
+		let url = `/network/${id}${query}`;
+		let config = {
+			method: 'GET',
+		};
+
+		return this.request(url, config);
+	}
+
+	/** Discover by genre, last air episode and more */
+	discover(options) {
+		let query = options ? `?${querystring.stringify(options)}` : '';
+
+		let url = `/discover/tv${query}`;
+		let config = {
+			method: 'GET',
+		};
+
+		return this.request(url, config);
+	}
+
+	/** Return trending series for the last 24h
+	 *
+	 * @param time 'day' or 'week'
+	 */
+	trending(time, options) {
+		let query = options ? `?${querystring.stringify(options)}` : '';
+
+		let url = `/trending/tv/${time}${query}`;
+		let config = {
+			method: 'GET',
+		};
+
+		return this.request(url, config);
+	}
 }
 
 module.exports = TMDB;
