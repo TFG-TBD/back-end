@@ -1,13 +1,13 @@
-const { userInfoType } = require('./userInfoType');
-const { userType } = require('./userType');
-const { platformType } = require('./platformType');
-const { listType } = require('./listType');
-const { ratingType } = require('./ratingType');
-const { conversationType } = require('./conversationType');
-const { messageType } = require('./messageType');
-const { reactionType } = require('./reactionType');
-const { commentType } = require('./commentType');
-const { serieType } = require('./serieType');
+const { userInfoType } = require('./userInfo');
+const { userType } = require('./user');
+const { platformType } = require('./platform');
+const { listType } = require('./list');
+const { ratingType } = require('./rating');
+const { conversationType } = require('./conversation');
+const { messageType } = require('./message');
+const { reactionType } = require('./reaction');
+const { commentType } = require('./comment');
+const { serieType } = require('./serie');
 
 module.exports = {
 	userInfoType,

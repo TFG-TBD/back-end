@@ -1,4 +1,13 @@
-const { query } = require('./query');
+const {
+	queries,
+	userQueries,
+	authQueries,
+	listQueries,
+	platformQueries,
+	serieQueries,
+	ratingQueries,
+} = require('./queries');
+
 const {
 	userInfoType,
 	userType,
@@ -13,7 +22,13 @@ const {
 } = require('./types');
 
 const typeDefs = [
-	query,
+	queries,
+	userQueries,
+	authQueries,
+	listQueries,
+	platformQueries,
+	serieQueries,
+	ratingQueries,
 	userInfoType,
 	platformType,
 	listType,
