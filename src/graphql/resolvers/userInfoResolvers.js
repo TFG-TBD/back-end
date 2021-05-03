@@ -1,4 +1,4 @@
-const { User, UserInfo } = require('../models');
+const { User, UserInfo } = require('../../models');
 const { AuthenticationError } = require('apollo-server');
 
 const userInfoResolvers = {

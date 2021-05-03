@@ -1,7 +1,7 @@
-const { Platform } = require('../models');
+const { Platform } = require('../../models');
 const { AuthenticationError } = require('apollo-server');
-const { TMDB_API_KEY } = require('../utils/config');
-const TMDB = require('../lib/TMDB');
+const { TMDB_API_KEY } = require('../../utils/config');
+const TMDB = require('../../lib/TMDB');
 
 const TMDBClient = new TMDB({
 	api_key: TMDB_API_KEY,

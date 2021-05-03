@@ -1,4 +1,4 @@
-const { List } = require('../models');
+const { List } = require('../../models');
 const { UserInputError, AuthenticationError } = require('apollo-server');
 
 const listResolvers = {

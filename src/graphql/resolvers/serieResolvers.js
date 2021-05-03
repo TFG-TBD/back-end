@@ -1,6 +1,6 @@
-const { TMDB_API_KEY } = require('../utils/config');
-const TMDB = require('../lib/TMDB');
-const { populateGenre } = require('../utils/functions');
+const { TMDB_API_KEY } = require('../../utils/config');
+const TMDB = require('../../lib/TMDB');
+const { populateGenre } = require('../../utils/functions');
 
 const TMDBClient = new TMDB({
 	api_key: TMDB_API_KEY,
