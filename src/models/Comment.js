@@ -6,6 +6,10 @@ const schema = new mongoose.Schema({
 		ref: 'User',
 		required: true,
 	},
+	serie: {
+		type: String,
+		required: true,
+	},
 	message: {
 		type: String,
 		required: true,

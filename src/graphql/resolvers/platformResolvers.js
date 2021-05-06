@@ -10,6 +10,17 @@ const TMDBClient = new TMDB({
 const platformResolvers = {
 	Query: {
 		platforms: () => Platform.find({}),
+
+		getTMDBPlatform: async (root, args) => {
+			const data = await TMDBClient.getNetwork(args.id, {});
+
+			return {
+				name: data.name,
+				logo_path: data.logo_path,
+				url: data.homepage,
+				tmdb_id: data.id,
+			};
+		},
 	},
 
 	Mutation: {

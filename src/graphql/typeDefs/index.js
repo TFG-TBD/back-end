@@ -6,6 +6,7 @@ const {
 	platformQueries,
 	serieQueries,
 	ratingQueries,
+	commentQueries,
 } = require('./queries');
 
 const {
@@ -29,6 +30,7 @@ const typeDefs = [
 	platformQueries,
 	serieQueries,
 	ratingQueries,
+	commentQueries,
 	userInfoType,
 	platformType,
 	listType,

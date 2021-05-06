@@ -4,6 +4,7 @@ const { listQueries } = require('./list');
 const { platformQueries } = require('./platform');
 const { serieQueries } = require('./serie');
 const { ratingQueries } = require('./rating');
+const { commentQueries } = require('./comment');
 const { gql } = require('apollo-server-core');
 
 const queries = gql`
@@ -19,4 +20,5 @@ module.exports = {
 	platformQueries,
 	serieQueries,
 	ratingQueries,
+	commentQueries,
 };

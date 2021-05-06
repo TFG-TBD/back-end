@@ -1,7 +1,13 @@
-const { User } = require('../../models');
+const { User, UserInfo } = require('../../models');
 const { AuthenticationError } = require('apollo-server');
 
 const userResolvers = {
+	User: {
+		userInfo: async (root) => {
+			return UserInfo.findById(root.userInfo);
+		},
+	},
+
 	Query: {},
 
 	Mutation: {
