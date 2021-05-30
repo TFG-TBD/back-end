@@ -100,6 +100,54 @@ class TMDB {
 
 		return this.request(url, config);
 	}
+
+	/** Return popular series for the last 24h */
+	popular(options) {
+		let query = options ? `?${querystring.stringify(options)}` : '';
+
+		let url = `/tv/popular/${query}`;
+		let config = {
+			method: 'GET',
+		};
+
+		return this.request(url, config);
+	}
+
+	/** Return top rated series for the last 24h */
+	topRated(options) {
+		let query = options ? `?${querystring.stringify(options)}` : '';
+
+		let url = `/tv/top_rated/${query}`;
+		let config = {
+			method: 'GET',
+		};
+
+		return this.request(url, config);
+	}
+
+	/** Return cast information of serie by id */
+	getCast(id, options) {
+		let query = options ? `?${querystring.stringify(options)}` : '';
+
+		let url = `/tv/${id}/credits${query}`;
+		let config = {
+			method: 'GET',
+		};
+
+		return this.request(url, config);
+	}
+
+	/** Return recomendations based on serie by id */
+	getRecomendations(id, options) {
+		let query = options ? `?${querystring.stringify(options)}` : '';
+
+		let url = `/tv/${id}/recommendations${query}`;
+		let config = {
+			method: 'GET',
+		};
+
+		return this.request(url, config);
+	}
 }
 
 module.exports = TMDB;

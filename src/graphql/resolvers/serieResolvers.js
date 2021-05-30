@@ -61,6 +61,44 @@ const serieResolvers = {
 
 			return data.results;
 		},
+		popular: async (root, args) => {
+			const data = await TMDBClient.popular({
+				language: args.lang | 'en-EN',
+			});
+
+			const { genres } = await TMDBClient.getGenres({
+				language: args.lang | 'en-EN',
+			});
+			populateGenre(data, genres);
+
+			return data.results;
+		},
+		topRated: async (root, args) => {
+			const data = await TMDBClient.topRated({
+				language: args.lang | 'en-EN',
+			});
+
+			const { genres } = await TMDBClient.getGenres({
+				language: args.lang | 'en-EN',
+			});
+			populateGenre(data, genres);
+
+			return data.results;
+		},
+		getCast: async (root, args) => {
+			const data = await TMDBClient.getCast(args.id, {
+				language: args.lang | 'en-EN',
+			});
+
+			return data.cast;
+		},
+		getRecomendations: async (root, args) => {
+			const data = await TMDBClient.getRecomendations(args.id, {
+				language: args.lang | 'en-EN',
+			});
+
+			return data.results;
+		},
 	},
 };
 

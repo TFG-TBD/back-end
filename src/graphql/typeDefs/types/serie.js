@@ -32,7 +32,7 @@ const serieType = gql`
 		poster_path: String
 		vote_average: Float
 		vote_count: Int
-		created_by: CreatedBy
+		created_by: [CreatedBy]
 		episode_run_time: [Int]
 		genres: [Genre]
 		homepage: String
@@ -96,6 +96,20 @@ const serieType = gql`
 		english_name: String
 		iso_639_1: String
 		name: String
+	}
+
+	type Person {
+		adult: Boolean
+		gender: Int
+		id: String
+		known_for_department: String
+		name: String
+		original_name: String
+		popularity: Float
+		profile_path: String
+		character: String
+		credit_id: String
+		order: Int
 	}
 `;
 

@@ -7,6 +7,10 @@ const serieQueries = gql`
 		getGenres(lang: String): [Genre]
 		discover(genres: [String], lang: String): [SerieSearch]
 		trending(time: String!, lang: String): [SerieSearch]
+		popular(lang: String): [Serie]
+		topRated(lang: String): [Serie]
+		getCast(id: String!, lang: String): [Person]
+		getRecomendations(id: String!, lang: String): [Serie]
 	}
 `;
 
