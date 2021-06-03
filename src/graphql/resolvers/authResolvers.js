@@ -1,4 +1,4 @@
-const { User, UserInfo } = require('../../models');
+const { User, UserInfo, List } = require('../../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('../../utils/config');
@@ -68,6 +68,31 @@ const authResolvers = {
 			});
 
 			await user.save();
+
+			const listSeen = new List({
+				name: 'Seen',
+				user: user._id,
+				description: 'Seen series or episodes',
+				public: false,
+				locked: true,
+				series: [],
+				episodes: [],
+				icon: '2',
+			});
+
+			const listLiked = new List({
+				name: 'Liked',
+				user: user._id,
+				description: 'Liked series or episodes',
+				public: false,
+				locked: true,
+				series: [],
+				episodes: [],
+				icon: '3',
+			});
+
+			await listSeen.save();
+			await listLiked.save();
 
 			const userForToken = {
 				id: user._id,

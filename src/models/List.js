@@ -19,6 +19,11 @@ const schema = new mongoose.Schema({
 		required: true,
 		default: false,
 	},
+	locked: {
+		type: Boolean,
+		required: true,
+		default: false,
+	},
 	icon: {
 		type: String,
 		required: false,

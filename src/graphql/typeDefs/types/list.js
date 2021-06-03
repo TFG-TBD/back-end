@@ -6,6 +6,7 @@ const listType = gql`
 		name: String!
 		description: String
 		public: Boolean!
+		locked: Boolean!
 		icon: String
 		series: [String!]!
 		episodes: [String!]!
