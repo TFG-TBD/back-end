@@ -1,12 +1,20 @@
 const { TMDB_API_KEY } = require('../../utils/config');
 const TMDB = require('../../lib/TMDB');
 const { populateGenre } = require('../../utils/functions');
+const { List } = require('../../models');
 
 const TMDBClient = new TMDB({
 	api_key: TMDB_API_KEY,
 });
 
 const serieResolvers = {
+	Serie: {
+		lists: async (root, args, context) => {
+			if (context.currentUser) return List.find({ user: context.currentUser._id, series: root.id });
+			return [];
+		},
+	},
+
 	Query: {
 		searchSeries: async (root, args) => {
 			const data = await TMDBClient.search({
@@ -75,6 +83,18 @@ const serieResolvers = {
 		},
 		topRated: async (root, args) => {
 			const data = await TMDBClient.topRated({
+				language: args.lang | 'en-EN',
+			});
+
+			const { genres } = await TMDBClient.getGenres({
+				language: args.lang | 'en-EN',
+			});
+			populateGenre(data, genres);
+
+			return data.results;
+		},
+		airingToday: async (root, args) => {
+			const data = await TMDBClient.airingToday({
 				language: args.lang | 'en-EN',
 			});
 

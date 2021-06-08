@@ -125,6 +125,18 @@ class TMDB {
 		return this.request(url, config);
 	}
 
+	/** Return airing today series */
+	airingToday(options) {
+		let query = options ? `?${querystring.stringify(options)}` : '';
+
+		let url = `/tv/airing_today/${query}`;
+		let config = {
+			method: 'GET',
+		};
+
+		return this.request(url, config);
+	}
+
 	/** Return cast information of serie by id */
 	getCast(id, options) {
 		let query = options ? `?${querystring.stringify(options)}` : '';

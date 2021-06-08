@@ -8,7 +8,7 @@ const listType = gql`
 		public: Boolean!
 		locked: Boolean!
 		icon: String
-		series: [String!]!
+		series: [Serie!]!
 		episodes: [String!]!
 	}
 `;

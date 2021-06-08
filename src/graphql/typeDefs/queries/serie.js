@@ -9,6 +9,7 @@ const serieQueries = gql`
 		trending(time: String!, lang: String): [SerieSearch]
 		popular(lang: String): [Serie]
 		topRated(lang: String): [Serie]
+		airingToday(lang: String): [Serie]
 		getCast(id: String!, lang: String): [Person]
 		getRecomendations(id: String!, lang: String): [Serie]
 	}

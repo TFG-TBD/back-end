@@ -49,6 +49,7 @@ const serieType = gql`
 		status: String
 		tagline: String
 		type: String
+		lists: [List]
 	}
 
 	type CreatedBy {

@@ -1,15 +1,43 @@
+const { TMDB_API_KEY } = require('../../utils/config');
+const TMDB = require('../../lib/TMDB');
 const { List } = require('../../models');
 const { UserInputError, AuthenticationError } = require('apollo-server');
 
+const TMDBClient = new TMDB({
+	api_key: TMDB_API_KEY,
+});
+
 const listResolvers = {
+	List: {
+		series: async (root, args) => {
+			if (root.series.length) {
+				const promises = [];
+
+				root.series.forEach((id) => {
+					promises.push(
+						TMDBClient.getSerie(id, {
+							language: args.lang | 'en-EN',
+						})
+					);
+				});
+
+				return await Promise.all(promises);
+			}
+			return [];
+		},
+	},
+
 	Query: {
-		lists: (root, args, context) => {
+		lists: async (root, args, context) => {
 			if (!context.currentUser)
 				throw new AuthenticationError('Unauthorized', {
 					invalidArgs: args,
 				});
 
-			if (args.id) return List.find({ _id: args.id, user: context.currentUser._id });
+			if (args.id) {
+				const lists = await List.find({ _id: args.id, user: context.currentUser._id });
+				return lists;
+			}
 
 			return List.find({ user: context.currentUser._id });
 		},
