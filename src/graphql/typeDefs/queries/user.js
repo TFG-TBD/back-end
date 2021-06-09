@@ -7,7 +7,14 @@ const userQueries = gql`
 
 	extend type Mutation {
 		# USERINFO
-		updateUser(name: String, surname: String, birthDate: String, gender: String, city: String): UserInfo
+		updateUser(
+			name: String
+			surname: String
+			birthDate: String
+			gender: String
+			city: String
+			public: Boolean
+		): UserInfo
 
 		# USER
 		follow(id: String): String

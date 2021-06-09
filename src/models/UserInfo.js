@@ -25,6 +25,11 @@ const schema = new mongoose.Schema({
 		type: String,
 		require: true,
 	},
+	public: {
+		type: Boolean,
+		require: false,
+		default: true,
+	},
 	confirmed: {
 		type: Boolean,
 		require: true,

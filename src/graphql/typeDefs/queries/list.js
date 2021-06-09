@@ -7,7 +7,7 @@ const listQueries = gql`
 
 	extend type Mutation {
 		addList(name: String!, description: String, public: Boolean, icon: String): List
-		deleteList(id: String!): String
+		deleteList(id: ID!): String
 		updateList(id: ID!, name: String, description: String, public: Boolean, icon: String): List
 		addSeriesToList(id: ID!, serieIds: [String]!): List
 		removeSeriesFromList(id: ID!, serieIds: [String]!): List

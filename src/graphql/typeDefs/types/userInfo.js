@@ -7,6 +7,7 @@ const userInfoType = gql`
 		surname: String
 		username: String!
 		email: String!
+		public: Boolean
 		confirmed: String!
 		admin: Boolean
 		birthDate: String
