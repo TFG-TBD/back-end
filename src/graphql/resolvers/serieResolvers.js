@@ -83,6 +83,10 @@ const serieResolvers = {
 			});
 			populateGenre(data, genres);
 
+			data.results.sort((a, b) => {
+				return b.popularity - a.popularity;
+			});
+
 			return data.results;
 		},
 		topRated: async (root, args) => {
