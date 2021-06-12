@@ -28,6 +28,10 @@ const serieResolvers = {
 			});
 			populateGenre(data, genres);
 
+			data.results.sort((a, b) => {
+				return b.popularity - a.popularity;
+			});
+
 			return data.results;
 		},
 		getSerie: async (root, args) => {
