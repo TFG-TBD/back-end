@@ -141,7 +141,7 @@ class TMDB {
 	getCast(id, options) {
 		let query = options ? `?${querystring.stringify(options)}` : '';
 
-		let url = `/tv/${id}/credits${query}`;
+		let url = `/tv/${id}/aggregate_credits${query}`;
 		let config = {
 			method: 'GET',
 		};
