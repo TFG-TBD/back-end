@@ -12,14 +12,9 @@ const commentResolvers = {
 	},
 
 	Query: {
-		comments: (root, args, context) => {
-			if (!context.currentUser)
-				throw new AuthenticationError('Unauthorized', {
-					invalidArgs: args,
-				});
-
-			if (args.serie) return Comment.find({ serie: args.serie, user: context.currentUser._id });
-			return Comment.find({ user: context.currentUser._id });
+		comments: (root, args) => {
+			if (args.serie) return Comment.find({ serie: args.serie }).sort([['date', -1]]);
+			return Comment.find({});
 		},
 	},
 	Mutation: {

@@ -7,6 +7,8 @@ const {
 	serieQueries,
 	ratingQueries,
 	commentQueries,
+	conversationQueries,
+	messageQueries,
 } = require('./queries');
 
 const {
@@ -31,6 +33,8 @@ const typeDefs = [
 	serieQueries,
 	ratingQueries,
 	commentQueries,
+	conversationQueries,
+	messageQueries,
 	userInfoType,
 	platformType,
 	listType,

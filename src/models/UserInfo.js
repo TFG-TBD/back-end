@@ -18,36 +18,36 @@ const schema = new mongoose.Schema({
 	},
 	email: {
 		type: String,
-		require: true,
+		required: true,
 		unique: true,
 	},
 	password: {
 		type: String,
-		require: true,
+		required: true,
 	},
 	public: {
 		type: Boolean,
-		require: false,
+		required: false,
 		default: true,
 	},
 	confirmed: {
 		type: Boolean,
-		require: true,
+		required: true,
 		default: false,
 	},
 	admin: {
 		type: Boolean,
-		require: false,
+		required: false,
 		default: false,
 	},
 	birthDate: {
 		type: Date,
-		require: false,
+		required: false,
 	},
 	gender: {
 		type: String,
 		enum: ['male', 'female', 'other'],
-		require: false,
+		required: false,
 	},
 	city: {
 		type: String,

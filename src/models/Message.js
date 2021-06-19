@@ -9,17 +9,29 @@ const schema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	to: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User',
+		required: true,
+	},
+	from: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User',
+		required: true,
+	},
 	date: {
 		type: Date,
 		required: true,
 	},
 	read: {
 		type: Boolean,
-		require: false,
+		required: false,
+		default: false,
 	},
 	sent: {
 		type: Boolean,
-		require: false,
+		required: false,
+		default: false,
 	},
 	reactions: [
 		{

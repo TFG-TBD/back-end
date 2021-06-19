@@ -4,9 +4,11 @@ const { listResolvers } = require('./listResolvers');
 const { userResolvers } = require('./userResolvers');
 const { serieResolvers } = require('./serieResolvers');
 const { authResolvers } = require('./authResolvers');
-const { ratingResolvers } = require('./rating');
-const { commentResolvers } = require('./comment');
+const { ratingResolvers } = require('./ratingResolvers');
+const { commentResolvers } = require('./commentResolvers');
 const { reactionResolvers } = require('./reaction');
+const { conversationResolvers } = require('./conversationResolvers');
+const { messageResolvers } = require('./messageResolvers');
 
 const resolvers = [
 	userInfoResolvers,
@@ -18,6 +20,8 @@ const resolvers = [
 	ratingResolvers,
 	commentResolvers,
 	reactionResolvers,
+	conversationResolvers,
+	messageResolvers,
 ];
 
 module.exports = {

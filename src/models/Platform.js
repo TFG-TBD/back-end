@@ -8,12 +8,12 @@ const schema = new mongoose.Schema({
 	},
 	tmdb_id: {
 		type: Number,
-		require: true,
+		required: true,
 		unique: true,
 	},
 	logo_path: {
 		type: String,
-		require: true,
+		required: true,
 	},
 	url: {
 		type: String,
