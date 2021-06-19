@@ -15,11 +15,6 @@ const schema = new mongoose.Schema({
 			required: true,
 		},
 	],
-	followsCount: {
-		type: Number,
-		required: false,
-		default: 0,
-	},
 	followers: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
@@ -27,11 +22,6 @@ const schema = new mongoose.Schema({
 			required: true,
 		},
 	],
-	followersCount: {
-		type: Number,
-		required: false,
-		default: 0,
-	},
 	platforms: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
@@ -60,6 +50,14 @@ const schema = new mongoose.Schema({
 			required: true,
 		},
 	],
+});
+
+schema.set('toJSON', {
+	transform: (document, returnedObject) => {
+		returnedObject.id = returnedObject._id.toString();
+		delete returnedObject._id;
+		delete returnedObject.__v;
+	},
 });
 
 schema.plugin(uniqueValidator);

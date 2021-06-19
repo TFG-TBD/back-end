@@ -112,6 +112,22 @@ const serieType = gql`
 		credit_id: String
 		order: Int
 	}
+
+	type PersonDetails {
+		adult: Boolean
+		gender: Int
+		id: String
+		known_for_department: String
+		also_known_as: [String]
+		biography: String
+		name: String
+		popularity: Float
+		profile_path: String
+		place_of_birth: String
+		imdb_id: String
+		homepage: String
+		deathday: String
+	}
 `;
 
 module.exports = {

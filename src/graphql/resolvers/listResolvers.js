@@ -1,6 +1,7 @@
 const { TMDB_API_KEY } = require('../../utils/config');
 const TMDB = require('../../lib/TMDB');
 const { List } = require('../../models');
+const { User } = require('../../models');
 const { UserInputError, AuthenticationError } = require('apollo-server');
 
 const TMDBClient = new TMDB({
@@ -25,6 +26,9 @@ const listResolvers = {
 			}
 			return [];
 		},
+		user: async (root) => {
+			return User.findById(root.user);
+		},
 	},
 
 	Query: {
@@ -35,7 +39,8 @@ const listResolvers = {
 				});
 
 			if (args.id) {
-				const lists = await List.find({ _id: args.id, user: context.currentUser._id });
+				const lists = await List.find({ _id: args.id });
+
 				return lists;
 			}
 

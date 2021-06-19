@@ -48,7 +48,9 @@ const authResolvers = {
 				email: user.userInfo.email,
 			};
 
-			return { value: jwt.sign(userForToken, JWT_SECRET, { expiresIn: '7d' }), expiresIn: '7d', user: user };
+			const retUser = new User(user);
+
+			return { value: jwt.sign(userForToken, JWT_SECRET, { expiresIn: '7d' }), expiresIn: '7d', user: retUser };
 		},
 		register: async (root, args) => {
 			const userInfo = new UserInfo({ username: args.username, email: args.email });

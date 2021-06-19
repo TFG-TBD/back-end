@@ -10,6 +10,7 @@ const listType = gql`
 		icon: String
 		series: [Serie!]!
 		episodes: [String!]!
+		user: User
 	}
 `;
 

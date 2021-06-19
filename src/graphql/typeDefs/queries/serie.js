@@ -11,6 +11,8 @@ const serieQueries = gql`
 		topRated(lang: String): [Serie]
 		airingToday(lang: String): [Serie]
 		getCast(id: String!, lang: String): [Person]
+		getPersonSeries(id: ID!, lang: String): [Serie]
+		getPersonDetails(id: ID!, lang: String): PersonDetails
 		getRecomendations(id: String!, lang: String): [Serie]
 	}
 `;

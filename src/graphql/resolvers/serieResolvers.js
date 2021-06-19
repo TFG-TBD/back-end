@@ -127,6 +127,24 @@ const serieResolvers = {
 
 			return data.results;
 		},
+		getPersonSeries: async (root, args) => {
+			const data = await TMDBClient.getPersonSeries(args.id, {
+				language: args.lang | 'en-EN',
+			});
+
+			data.cast.sort((a, b) => {
+				return b.popularity - a.popularity;
+			});
+
+			return data.cast;
+		},
+		getPersonDetails: async (root, args) => {
+			const data = await TMDBClient.getPersonDetails(args.id, {
+				language: args.lang | 'en-EN',
+			});
+
+			return data;
+		},
 	},
 };
 

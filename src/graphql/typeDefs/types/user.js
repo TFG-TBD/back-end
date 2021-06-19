@@ -4,6 +4,7 @@ const userType = gql`
 	type User {
 		id: ID!
 		userInfo: UserInfo
+		isFollowed: Boolean
 		follows: [User]!
 		followsCount: Int!
 		followers: [User]!

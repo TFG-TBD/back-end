@@ -149,6 +149,30 @@ class TMDB {
 		return this.request(url, config);
 	}
 
+	/** Return person series by id */
+	getPersonSeries(id, options) {
+		let query = options ? `?${querystring.stringify(options)}` : '';
+
+		let url = `/person/${id}/tv_credits${query}`;
+		let config = {
+			method: 'GET',
+		};
+
+		return this.request(url, config);
+	}
+
+	/** Return person information by id */
+	getPersonDetails(id, options) {
+		let query = options ? `?${querystring.stringify(options)}` : '';
+
+		let url = `/person/${id}${query}`;
+		let config = {
+			method: 'GET',
+		};
+
+		return this.request(url, config);
+	}
+
 	/** Return recomendations based on serie by id */
 	getRecomendations(id, options) {
 		let query = options ? `?${querystring.stringify(options)}` : '';
