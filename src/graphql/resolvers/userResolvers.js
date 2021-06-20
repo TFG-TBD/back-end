@@ -40,7 +40,7 @@ const userResolvers = {
 		},
 
 		getUser: async (root, args, context) => {
-			const user = await (await User.findById(args.id)).populate('userInfo').execPopulate();
+			const user = await User.findById(args.id).populate('userInfo');
 
 			if (user && user.userInfo.public) {
 				if (context.currentUser) user.isFollowed = user.followers.includes(context.currentUser.id);
@@ -54,13 +54,12 @@ const userResolvers = {
 		getFollowers: async (root, args, context) => {
 			if (!args.id) {
 				if (context.currentUser) {
-					const user = await (await User.findById(context.currentUser.id))
-						.populate('followers')
-						.execPopulate();
+					const user = await User.findById(context.currentUser.id).populate('followers');
+
 					return user.followers;
 				}
 			} else {
-				const user = await (await User.findById(args.id)).populate('followers').execPopulate();
+				const user = await User.findById(args.id).populate('followers');
 				return user.followers;
 			}
 
@@ -70,11 +69,11 @@ const userResolvers = {
 		getFollows: async (root, args, context) => {
 			if (!args.id) {
 				if (context.currentUser) {
-					const user = await (await User.findById(context.currentUser.id)).populate('follows').execPopulate();
+					const user = await User.findById(context.currentUser.id).populate('follows');
 					return user.follows;
 				}
 			} else {
-				const user = await (await User.findById(args.id)).populate('follows').execPopulate();
+				const user = await User.findById(args.id).populate('follows');
 				return user.follows;
 			}
 

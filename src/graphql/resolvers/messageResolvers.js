@@ -18,7 +18,13 @@ const messageResolvers = {
 					invalidArgs: args,
 				});
 
-			const message = new Message({ message: args.message, to: args.user, date: new Date(), type: 'text' });
+			const message = new Message({
+				message: args.message,
+				to: args.user,
+				from: context.currentUser._id,
+				date: new Date(),
+				type: 'text',
+			});
 			const messageSaved = await message.save();
 
 			const conversation = await Conversation.findOneAndUpdate(
@@ -36,7 +42,18 @@ const messageResolvers = {
 				{ useFindAndModify: false, new: true }
 			);
 
-			context.pubsub.publish(['NEW_MESSAGE'], { newMessage: { ...messageSaved, from: context.currentUser._id } });
+			context.pubsub.publish(['NEW_MESSAGE'], {
+				newMessage: {
+					id: messageSaved._id,
+					message: messageSaved.message,
+					type: messageSaved.type,
+					date: messageSaved.date,
+					read: messageSaved.read,
+					sent: messageSaved.sent,
+					to: args.user,
+					from: context.currentUser._id,
+				},
+			});
 
 			if (!conversation) {
 				const newConversation = new Conversation({
