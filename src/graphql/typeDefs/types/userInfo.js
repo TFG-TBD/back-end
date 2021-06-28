@@ -13,6 +13,7 @@ const userInfoType = gql`
 		birthDate: String
 		gender: String
 		city: String
+		img: Int
 	}
 `;
 

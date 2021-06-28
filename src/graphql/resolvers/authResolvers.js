@@ -53,7 +53,11 @@ const authResolvers = {
 			return { value: jwt.sign(userForToken, JWT_SECRET, { expiresIn: '7d' }), expiresIn: '7d', user: retUser };
 		},
 		register: async (root, args) => {
-			const userInfo = new UserInfo({ username: args.username, email: args.email });
+			const userInfo = new UserInfo({
+				username: args.username,
+				email: args.email,
+				img: Math.floor(Math.random() * 4) + 1,
+			});
 
 			const saltRounds = 10;
 			userInfo.password = await bcrypt.hash(args.password, saltRounds);

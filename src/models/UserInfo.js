@@ -53,6 +53,11 @@ const schema = new mongoose.Schema({
 		type: String,
 		required: false,
 	},
+	img: {
+		type: Number,
+		required: true,
+		default: 1,
+	},
 });
 
 schema.set('toJSON', {
