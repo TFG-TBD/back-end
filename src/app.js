@@ -4,10 +4,17 @@ const { resolvers } = require('./graphql/resolvers');
 // eslint-disable-next-line no-unused-vars
 const mongoose = require('./utils/database');
 const contextMiddleware = require('./utils/contextMiddleware');
+const { validateToken } = require('./utils/validateUser');
 
 const server = new ApolloServer({
 	subscriptions: {
 		path: '/pubsub',
+		onConnect: async (connectionParams) => {
+			if (connectionParams.Authorization && connectionParams.Authorization !== null)
+				return validateToken(connectionParams.Authorization);
+
+			throw Error('Wrong Authentication');
+		},
 	},
 	typeDefs,
 	resolvers,

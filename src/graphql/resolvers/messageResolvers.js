@@ -72,12 +72,14 @@ const messageResolvers = {
 		newMessage: {
 			subscribe: withFilter(
 				(_, __, context) => {
-					if (!context.currentUser) throw new AuthenticationError('Unauthorized', {});
+					if (!context || !context.connection.context.currentUser)
+						throw new AuthenticationError('Unauthorized', {});
 
 					return context.pubsub.asyncIterator(['NEW_MESSAGE']);
 				},
 				(root, _, context) => {
-					if (root.newMessage.to.toString() === context.currentUser._id.toString()) return true;
+					if (root.newMessage.to.toString() === context.connection.context.currentUser._id.toString())
+						return true;
 					return false;
 				}
 			),
