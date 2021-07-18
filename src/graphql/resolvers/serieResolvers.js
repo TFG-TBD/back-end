@@ -1,6 +1,6 @@
 const { TMDB_API_KEY } = require('../../utils/config');
 const TMDB = require('../../lib/TMDB');
-const { populateGenre } = require('../../utils/functions');
+const { populateGenre, removeLowRating } = require('../../utils/functions');
 const { List } = require('../../models');
 
 const TMDBClient = new TMDB({
@@ -58,6 +58,7 @@ const serieResolvers = {
 				language: args.lang | 'en-EN',
 			});
 			populateGenre(data, genres);
+			removeLowRating(data);
 
 			return data.results;
 		},
@@ -70,6 +71,7 @@ const serieResolvers = {
 				language: args.lang | 'en-EN',
 			});
 			populateGenre(data, genres);
+			removeLowRating(data);
 
 			return data.results;
 		},
@@ -82,6 +84,7 @@ const serieResolvers = {
 				language: args.lang | 'en-EN',
 			});
 			populateGenre(data, genres);
+			removeLowRating(data);
 
 			data.results.sort((a, b) => {
 				return b.popularity - a.popularity;
@@ -98,6 +101,7 @@ const serieResolvers = {
 				language: args.lang | 'en-EN',
 			});
 			populateGenre(data, genres);
+			removeLowRating(data);
 
 			return data.results;
 		},
@@ -110,6 +114,7 @@ const serieResolvers = {
 				language: args.lang | 'en-EN',
 			});
 			populateGenre(data, genres);
+			removeLowRating(data);
 
 			return data.results;
 		},

@@ -8,6 +8,11 @@ const populateGenre = (data, genres) => {
 	});
 };
 
+const removeLowRating = (data) => {
+	data.results = data.results.filter((s) => s.vote_average > 7);
+};
+
 module.exports = {
 	populateGenre,
+	removeLowRating,
 };
